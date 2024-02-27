@@ -8,6 +8,8 @@ import Movies from "./routes/Movies";
 import Movie from "./routes/Movie";
 import Login from "./routes/Login";
 import CreateAccount from "./routes/CreateAccount";
+import { useEffect, useState } from "react";
+import LoadingScreen from "./components/LoadingScreen";
 
 const router = createBrowserRouter([
   {
@@ -55,10 +57,18 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const init = async () => {
+    // wait for firebase
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <>
       <GlobalStyles />
-      <RouterProvider router={router} />
+      {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
     </>
   );
 }
