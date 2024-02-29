@@ -11,6 +11,7 @@ import {
   Wrapper,
 } from "../components/AuthComponents";
 import { FirebaseError } from "firebase/app";
+import GithubButton from "../components/GithubButton";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ export default function CreateAccount() {
       <Switcher>
         Alreay have an account? <Link to="/login">Login &rarr;</Link>
       </Switcher>
+      <GithubButton />
     </Wrapper>
   );
 }
