@@ -47,7 +47,7 @@ export default function Login() {
   };
   return (
     <Wrapper>
-      <Title>Log into 𝕏</Title>
+      <Title>Login 𝕏</Title>
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
