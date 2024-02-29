@@ -1,7 +1,19 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
-import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import {
+  Form,
+  Error,
+  Input,
+  Switcher,
+  Title,
+  Wrapper,
+} from "../components/AuthComponents";
+import { FirebaseError } from "firebase/app";
 
 export default function CreateAccount() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,14 +29,25 @@ export default function CreateAccount() {
     else if (name === "password") setPassword(value);
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    if (isLoading || name === "" || email === "" || password === "") return;
     try {
-      // create account
-      // set the name of the user
-      // redirect to the home page
+      setIsLoading(true);
+      const credentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await updateProfile(credentials.user, {
+        displayName: name,
+      });
+      navigate("/");
     } catch (error) {
-      // set error;
+      if (error instanceof FirebaseError) {
+        setError(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -32,7 +55,7 @@ export default function CreateAccount() {
 
   return (
     <Wrapper>
-      <Title>Login X</Title>
+      <Title>Join X</Title>
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
@@ -64,46 +87,9 @@ export default function CreateAccount() {
         />
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
+      <Switcher>
+        Alreay have an account? <Link to="/login">Login &rarr;</Link>
+      </Switcher>
     </Wrapper>
   );
 }
-const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 420px;
-  padding: 50px 0px;
-`;
-
-const Title = styled.h1`
-  font-size: 42px;
-`;
-
-const Form = styled.form`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 16px;
-  &[type="submit"] {
-    cursor: pointer;
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-`;
-
-const Error = styled.span`
-  font-weight: 600;
-  color: tomato;
-`;

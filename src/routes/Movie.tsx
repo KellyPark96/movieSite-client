@@ -39,6 +39,7 @@ export default function Movie() {
       },
     });
   };
+
   return (
     <Container>
       <Column>

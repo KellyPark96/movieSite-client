@@ -10,11 +10,17 @@ import Login from "./routes/Login";
 import CreateAccount from "./routes/CreateAccount";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { auth } from "./firebase";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "",
@@ -24,15 +30,15 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "/movies",
+        element: <Movies />,
+      },
+      {
+        path: "/movies/:id",
+        element: <Movie />,
+      },
     ],
-  },
-  {
-    path: "/movies",
-    element: <Movies />,
-  },
-  {
-    path: "/movies/:id",
-    element: <Movie />,
   },
   {
     path: "/login",
@@ -59,12 +65,14 @@ const GlobalStyles = createGlobalStyle`
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const init = async () => {
-    // wait for firebase
+    await auth.authStateReady();
     setIsLoading(false);
   };
+
   useEffect(() => {
     init();
   }, []);
+
   return (
     <Wrapper>
       <GlobalStyles />
