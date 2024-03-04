@@ -17,7 +17,6 @@ export default function PostTweetForm() {
       setFile(files[0]);
     }
   };
-  console.log(db);
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user = auth.currentUser;
