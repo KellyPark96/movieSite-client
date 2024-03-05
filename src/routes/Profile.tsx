@@ -1,13 +1,27 @@
 import styled from "styled-components";
-import { auth, storage } from "../firebase";
-import { useState } from "react";
+import { auth, db, storage } from "../firebase";
+import { useEffect, useState } from "react";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
+import { ITweet } from "../components/Timeline";
+import Tweet from "../components/Tweet";
+import {
+  collection,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+import editIcon from "/icons/edit.svg";
 
 export default function Profile() {
   const user = auth.currentUser;
   const [avatar, setAvatar] = useState(user?.photoURL);
-  const onAvatarChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [tweets, setTweets] = useState<ITweet[]>([]);
+  const [edit, setEdit] = useState(false);
+  const [editedNickname, setEditedNickname] = useState("");
+  const onChangeAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (!user) return;
     if (files && files.length === 1) {
@@ -21,6 +35,39 @@ export default function Profile() {
       });
     }
   };
+  const onChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedNickname(event.target.value);
+  };
+  const onEdit = async () => {
+    if (!user) return;
+    try {
+      await updateProfile(user, {
+        displayName: editedNickname,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setEdit(false);
+  };
+  const fetchTweets = async () => {
+    const tweetQuery = query(
+      collection(db, "tweets"),
+      where("userId", "==", user?.uid),
+      orderBy("createdAt", "desc"),
+      limit(25)
+    );
+    const snapshot = await getDocs(tweetQuery);
+    const tweets = snapshot.docs.map((doc) => {
+      const { tweet, createdAt, userId, username, photo } = doc.data();
+      return { tweet, createdAt, userId, username, photo, id: doc.id };
+    });
+    setTweets(tweets);
+  };
+  useEffect(() => {
+    fetchTweets();
+  }, []);
+
+  console.log("tweets", tweets);
 
   return (
     <Wrapper>
@@ -39,12 +86,34 @@ export default function Profile() {
         )}
       </AvatarUpload>
       <AvatarInput
-        onChange={onAvatarChange}
+        onChange={onChangeAvatar}
         id="avatar"
         type="file"
         accept="image/*"
       />
-      <Name>{user?.displayName ?? "Anonymous"}</Name>
+      <Name>
+        {edit ? (
+          <div>
+            <input
+              onChange={onChangeNickname}
+              defaultValue={user?.displayName ?? "Anonymous"}
+            />
+            <EditDoneButton type="button" onClick={onEdit}>
+              Done
+            </EditDoneButton>
+          </div>
+        ) : (
+          <div>
+            <div>{user?.displayName ?? "Anonymous"}</div>
+            <EditButton type="button" onClick={() => setEdit(true)} />
+          </div>
+        )}
+      </Name>
+      <Tweets>
+        {tweets.map((tweet) => (
+          <Tweet key={tweet.id} {...tweet} />
+        ))}
+      </Tweets>
     </Wrapper>
   );
 }
@@ -69,7 +138,6 @@ const AvatarUpload = styled.label`
     width: 50px;
   }
 `;
-
 const AvatarImg = styled.img`
   width: 100%;
 `;
@@ -78,4 +146,27 @@ const AvatarInput = styled.input`
 `;
 const Name = styled.span`
   font-size: 22px;
+`;
+const Tweets = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
+`;
+const EditDoneButton = styled.button`
+  background-color: #2c8b6f;
+  color: white;
+  font-weight: 600;
+  border: 0;
+  font-size: 12px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+const EditButton = styled.button`
+  width: 25px;
+  height: 25px;
+  background: rgba(0, 0, 0, 0.8) url(${editIcon}) no-repeat center;
+  background-size: 18px 18px;
 `;

@@ -53,13 +53,17 @@ export default function Tweet({ username, photo, tweet, userId, id }: ITweet) {
     const { files } = event.target;
     if (files && files.length === 1) {
       try {
-        const result = await uploadBytes(photoRef, files[0]);
-        console.log(result);
-        const url = await getDownloadURL(result.ref);
-        console.log(url);
-        await updateDoc(doc(db, "tweets", id), {
-          photo: url,
-        });
+        const maxSize = 2 * 1024 * 1024;
+        const fileSize = files[0].size;
+        if (fileSize > maxSize) {
+          alert("You can upload file less than 2MB");
+        } else {
+          const result = await uploadBytes(photoRef, files[0]);
+          const url = await getDownloadURL(result.ref);
+          await updateDoc(doc(db, "tweets", id), {
+            photo: url,
+          });
+        }
       } catch (error) {
         console.log(error);
       }
