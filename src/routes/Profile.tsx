@@ -67,8 +67,6 @@ export default function Profile() {
     fetchTweets();
   }, []);
 
-  console.log("tweets", tweets);
-
   return (
     <Wrapper>
       <AvatarUpload htmlFor="avatar">
