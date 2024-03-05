@@ -82,7 +82,6 @@ export default function App() {
 }
 
 const Wrapper = styled.div`
+  padding: 8px;
   height: 100vh;
-  display: flex;
-  justify-content: center;
 `;
