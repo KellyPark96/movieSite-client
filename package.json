@@ -5,6 +5,7 @@
   "type": "module",
   "author": "KellyPark",
   "description": "Listen to music and share your favorite songs with others",
+  "license": "ISC",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
