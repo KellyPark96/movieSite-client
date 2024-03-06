@@ -1,20 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <title>KOMAMO</title>
-  <meta property="og:title" content="KOMAMO is for people who love music." />
-  <meta property=" og:url" content="https://komamo.com/" />
-  <meta property="og:image" content="" />
-  <meta property="og:description" content="Listen to music and share your favorite songs with others!" />
-</head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/index.tsx"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <title>KOMAMO</title>
+    <meta property="og:title" content="KOMAMO is for people who love music." />
+    <meta property=" og:url" content="https://culture-fit-e5b2b.web.app/" />
+    <!-- <meta property=" og:url" content="https://komamo.com/" /> -->
+    <meta property="og:image" content="" />
+    <meta
+      property="og:description"
+      content="Listen to music and share your favorite songs with others!"
+    />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <!-- <Head>
+  <DefaultSeo
+    title="팬마음"
+    description="지금 바로 세상에 하나뿐인 나의 트로트 스타를 응원해 보세요. 팬마음은 트로트 팬 여러분의 하나뿐인 나의 트로트 스타를 응원하는 스타 응원 서비스입니다."
+    canonical="https://culture-fit-e5b2b.web.app"
+    openGraph={{
+      siteName: '팬마음',
+      title: '팬마음',
+      type: 'website',
+      description: '트롯스타에게 무료로 서울 지하철광고 선물하기',
+      url: 'https://culture-fit-e5b2b.web.app/notice/28433407',
+      images: [{ url: 'https://culture-fit-e5b2b.web.app/images/thumbnail_02.png' }],
+    }}
+    twitter={{ cardType: 'summary' }}
+    additionalMetaTags={[
+      {
+        name: 'naver-site-verification',
+        content: 'e718fea934d8e6062aa16281540b6aca505c50bb',
+      },
+      {
+        name: 'msapplication-TileColor',
+        content: '#ffffff',
+      },
+      {
+        name: 'msapplication-TileImage',
+        content: '/ms-icon-144x144.png',
+      },
+    ]}
+    dangerouslySetAllPagesToNoFollow={publicEnv.DOMAIN !== 'https://culture-fit-e5b2b.web.app'}
+    dangerouslySetAllPagesToNoIndex={publicEnv.DOMAIN !== 'https://culture-fit-e5b2b.web.app'}
+  />
+  <Script
+    src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+    integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx"
+    crossOrigin="anonymous"
+    onLoad={kakaoInit}
+  />
+  <Script type="text/javascript" src="//wcs.naver.net/wcslog.js"></Script>
+  <Script id="naver-script" type="text/javascript">
+    {`if(!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "1ac703fedced330";
+if(window.wcs) {
+wcs_do();
+}`}
+  </Script>
+  <Script type="text/javascript" id="webView">
+    {`function shareBtn(id) {
+      window.dispatchEvent(new CustomEvent('onShareClickAfterVote', { detail: id }));
+    }
+    function voteSuccess() {
+      window.dispatchEvent(new CustomEvent('onVoteSuccess'));
+    }`}
+  </Script>
+  <Script
+    id="structuredData"
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+  /> -->
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
 </html>
