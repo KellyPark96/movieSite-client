@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { backgroundImage } from "./movie";
+import { backgroundImage } from "./Movie";
 
 const ALL_MOVIES = gql`
   query getMovies {
