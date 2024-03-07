@@ -1,5 +1,22 @@
 ## 🛠 Development Setup
 
+# pages
+
+/ -> Home
+/join -> Join
+/login -> Login
+/search -> Search
+
+/users/:id -> See User
+/users/logout -> Log Out
+/users/edit -> Edit MY Profile
+/users/delete -> Delete MY Profile
+
+/videos/:id -> See Video
+/videos/:id/edit -> Edit Video
+/videos/:id/delete -> Delete Video
+/videos/upload -> Upload Video
+
 > `npm`을 기본 패키지 매니저로 사용합니다. (aws build 환경에서도 npm을 사용)
 
 개발 서버 시작을 위해 다음 명령어를 사용하세요.
