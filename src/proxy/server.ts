@@ -1,8 +1,8 @@
 import express, { Express } from "express";
 import morgan from "morgan";
 import globalRouter from "../routes/globalRouter.ts";
-import videoRouter from "../routes/videoRouter";
-import userRouter from "../routes/userRouter";
+import videoRouter from "../routes/videoRouter.ts";
+import userRouter from "../routes/userRouter.ts";
 
 const PORT: number = 4000;
 
