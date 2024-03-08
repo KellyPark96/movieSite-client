@@ -1,24 +1,21 @@
-import express, { Express, Request, Response } from "express";
-import { NextFunction } from "express-serve-static-core";
+import express from "express";
+import morgan from "morgan";
+import globalRouter from "../routes/globalRouter.ts";
+import videoRouter from "../routes/videoRouter.ts";
+import userRouter from "../routes/userRouter.ts";
 
-const PORT: number = 4000;
+const PORT = 4000;
 
-const app: Express = express();
+const app = express();
+const logger = morgan("dev");
+app.use(logger);
 
-const gossipMiddleware = (req: Request, _res: Response, next: NextFunction) => {
-  console.log(`Someone is going to: ${req.url}`);
-  next();
-};
+app.use("/", globalRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
 
-const handleHome = (_req: Request, res: Response) => {
-  return res.send("I love middlewares");
-};
-
-app.get("/", gossipMiddleware, handleHome);
-
-const handleListening = () => {
+const handleListening = () =>
   console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
-};
 
 app.listen(PORT, handleListening);
 
