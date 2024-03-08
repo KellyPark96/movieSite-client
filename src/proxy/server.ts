@@ -4,10 +4,15 @@ import globalRouter from "../routes/globalRouter.ts";
 import videoRouter from "../routes/videoRouter.ts";
 import userRouter from "../routes/userRouter.ts";
 
-const PORT = 4000;
+const PORT = 9000;
+
+console.log("", process.cwd());
 
 const app = express();
 const logger = morgan("dev");
+
+app.set("views", process.cwd() + "/src/views");
+app.set("view engine", "pug");
 app.use(logger);
 
 app.use("/", globalRouter);
