@@ -6,14 +6,14 @@ import userRouter from "../routes/userRouter.ts";
 
 const PORT = 9000;
 
-console.log("", process.cwd());
-
 const app = express();
 const logger = morgan("dev");
 
 app.set("views", process.cwd() + "/src/views");
 app.set("view engine", "pug");
 app.use(logger);
+
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
