@@ -1,0 +1,21 @@
+{
+  "name": "moviesite-client",
+  "version": "1.0.0",
+  "description": "this is moviesite-client.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KellyPark96/movieSite-client.git"
+  },
+  "scripts": {
+    "win": "node index.js"
+  },
+  "author": "KellyPark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KellyPark96/movieSite-client/issues"
+  },
+  "homepage": "https://github.com/KellyPark96/movieSite-client#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
