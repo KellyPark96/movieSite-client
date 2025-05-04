@@ -7,7 +7,7 @@
     "url": "git+https://github.com/KellyPark96/movieSite-client.git"
   },
   "scripts": {
-    "win": "node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "author": "KellyPark",
   "license": "MIT",
@@ -16,6 +16,14 @@
   },
   "homepage": "https://github.com/KellyPark96/movieSite-client#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/node": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "nodemon": "^2.0.7"
   }
 }
