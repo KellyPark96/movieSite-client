@@ -14,3 +14,6 @@
 /videos/:id/edit -> Edit Video
 /videos/:id/delete -> Delete Video
 /videos/upload -> Upload Video
+
+DB_URL = 'mongodb://127.0.0.1:27017/moviesite'
+COOKIE_SECRET = 'Hello!'
