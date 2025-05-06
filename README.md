@@ -28,6 +28,7 @@
 
 ```
 DB_URL = 'mongodb://127.0.0.1:27017/moviesite'
-
 COOKIE_SECRET = 'asdfhejhhviserhobvdfdfdfsfdc'
+GH_CLIENT = 'Ov23ctV42YT88pMO55nK'
+GH_SECRET = 'cd707d68b008bcc1fbc9e5d6696d4a98b5f3e796'
 ```
