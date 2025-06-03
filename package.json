@@ -7,8 +7,11 @@
     "url": "git+https://github.com/KellyPark96/movieSite-client.git"
   },
   "scripts": {
-    "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack --mode=development --watch",
+    "build:server": "babel src -d dist",
+    "build:assets": "webpack --mode=production",
+    "build": "npm run build:server && npm run build:assets",
+    "start": "node dist/init.js"
   },
   "author": "KellyPark <kellypark2032@gmail.com>",
   "license": "MIT",
