@@ -4,5 +4,6 @@
 /uploads
 .DS_Store
 /assets
+/build
 /dist
 /.idea

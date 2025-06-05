@@ -1,23 +1,23 @@
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
-const videoSchema = new mongoose.Schema({
-  title: { type: String, required: true, trim: true, maxLength: 80 },
-  fileUrl: { type: String, required: true },
-  thumbUrl: { type: String, required: true },
-  description: { type: String, required: true, trim: true, minLength: 2 },
-  createdAt: { type: Date, required: true, default: Date.now },
-  hashtags: [{ type: String, trim: true }],
-  meta: {
-    views: { type: Number, default: 0, required: true },
-  },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Comment' }],
-  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  avatarUrl: { type: String, default: '' },
+  socialOnly: { type: Boolean, default: false },
+  username: { type: String, required: true, unique: true },
+  password: { type: String },
+  name: { type: String, required: true },
+  location: String,
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Video' }],
 });
 
-videoSchema.static('formatHashtags', function (hashtags) {
-  return hashtags.split(',').map((word) => (word.startsWith('#') ? word : `#${word}`));
+userSchema.pre('save', async function () {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
-const Video = mongoose.model('Video', videoSchema);
-
-export default Video;
+const User = mongoose.model('User', userSchema);
+export default User;
